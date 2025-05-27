@@ -52,18 +52,23 @@ document.getElementById('save-png').addEventListener('click', function () {
     tempCanvas.width = 400;
     tempCanvas.height = 200;
     
-    // Draw background image
+    // Draw background image first
     const img = document.querySelector('img');
-    tempCtx.drawImage(img, 0, 0, 400, 200);
-    
-    // Draw signature on top
-    tempCtx.drawImage(canvas, 0, 0);
-    
-    const dataURL = tempCanvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.download = 'drawing.png';
-    link.href = dataURL;
-    link.click();
+    if (img.complete) {
+        tempCtx.drawImage(img, 0, 0, 400, 200);
+        // Draw signature on top
+        tempCtx.drawImage(canvas, 0, 0);
+        
+        const dataURL = tempCanvas.toDataURL('image/png');
+        window.open(dataURL);
+    } else {
+        img.onload = function() {
+            tempCtx.drawImage(img, 0, 0, 400, 200);
+            tempCtx.drawImage(canvas, 0, 0);
+            const dataURL = tempCanvas.toDataURL('image/png');
+            window.open(dataURL);
+        };
+    }
 });
 
 // Save as JPEG
@@ -84,16 +89,21 @@ document.getElementById('save-jpeg').addEventListener('click', function () {
     
     // Draw background image
     const img = document.querySelector('img');
-    tempCtx.drawImage(img, 0, 0, 400, 200);
-    
-    // Draw signature on top
-    tempCtx.drawImage(canvas, 0, 0);
-    
-    const dataURL = tempCanvas.toDataURL('image/jpeg', 0.9);
-    const link = document.createElement('a');
-    link.download = 'drawing.jpg';
-    link.href = dataURL;
-    link.click();
+    if (img.complete) {
+        tempCtx.drawImage(img, 0, 0, 400, 200);
+        // Draw signature on top
+        tempCtx.drawImage(canvas, 0, 0);
+        
+        const dataURL = tempCanvas.toDataURL('image/jpeg', 0.9);
+        window.open(dataURL);
+    } else {
+        img.onload = function() {
+            tempCtx.drawImage(img, 0, 0, 400, 200);
+            tempCtx.drawImage(canvas, 0, 0);
+            const dataURL = tempCanvas.toDataURL('image/jpeg', 0.9);
+            window.open(dataURL);
+        };
+    }
 });
 
 // Save as SVG
