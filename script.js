@@ -101,26 +101,75 @@ const canvas = document.getElementById('signature-pad');
         });
 
         // Save button
-        document.getElementById('save').addEventListener('click', function() {
-            // Create a new canvas to combine image and drawing
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
-            tempCanvas.width = 400;
-            tempCanvas.height = 200;
+        // document.getElementById('save').addEventListener('click', function() {
+        //     // Create a new canvas to combine image and drawing
+        //     const tempCanvas = document.createElement('canvas');
+        //     const tempCtx = tempCanvas.getContext('2d');
+        //     tempCanvas.width = 400;
+        //     tempCanvas.height = 200;
             
-            // Draw the background image
-            const img = document.querySelector('img');
-            tempCtx.drawImage(img, 0, 0, 400, 200);
+        //     // Draw the background image
+        //     const img = document.querySelector('img');
+        //     tempCtx.drawImage(img, 0, 0, 400, 200);
             
-            // Draw the signature canvas on top
-            tempCtx.drawImage(canvas, 0, 0);
+        //     // Draw the signature canvas on top
+        //     tempCtx.drawImage(canvas, 0, 0);
             
-            // Convert to data URL and open in new window
-            const dataURL = tempCanvas.toDataURL('image/png');
-            window.open(dataURL);
+        //     // Convert to data URL and open in new window
+        //     const dataURL = tempCanvas.toDataURL('image/png');
+        //     window.open(dataURL);
+        // });
+
+        // // Clear button
+        // document.getElementById('clear').addEventListener('click', function() {
+        //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // });
+        
+    
+        var signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
         });
 
-        // Clear button
-        document.getElementById('clear').addEventListener('click', function() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById('save-png').addEventListener('click', function () {
+
+        if (signaturePad.isEmpty()) {
+            return alert("Please provide a signature first.");
+        }
+        
+        var data = signaturePad.toDataURL('image/png');
+        console.log(data);
+        window.open(data);
+        });
+
+        document.getElementById('save-jpeg').addEventListener('click', function () {
+        if (signaturePad.isEmpty()) {
+            return alert("Please provide a signature first.");
+        }
+
+        var data = signaturePad.toDataURL('image/jpeg');
+        console.log(data);
+        window.open(data);
+        });
+
+        document.getElementById('save-svg').addEventListener('click', function () {
+        if (signaturePad.isEmpty()) {
+            return alert("Please provide a signature first.");
+        }
+
+        var data = signaturePad.toDataURL('image/svg+xml');
+        console.log(data);
+        console.log(atob(data.split(',')[1]));
+        window.open(data);
+        });
+
+        document.getElementById('clear').addEventListener('click', function () {
+        signaturePad.clear();
+        });
+
+        document.getElementById('undo').addEventListener('click', function () {
+            var data = signaturePad.toData();
+        if (data) {
+            data.pop(); // remove the last dot or line
+            signaturePad.fromData(data);
+        }
         });
