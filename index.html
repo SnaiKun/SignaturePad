@@ -1,23 +1,40 @@
 <!DOCTYPE html>
-<h1>Draw over an image</h1>
-<body></body>
-<div class="wrapper">
-  <img
-    src="https://preview.ibb.co/jnW4Qz/Grumpy_Cat_920x584.jpg"
-    width="400"
-    height="200"
-  />
-  <canvas
-    id="signature-pad"
-    class="signature-pad"
-    width="400"
-    height="200"
-  ></canvas>
-</div>
-<div>
-  <button id="save">Save</button>
-  <button id="clear">Clear</button>
-</div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw over an image</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1>Draw over an image</h1>
+    
+    <div class="wrapper">
+        <img src="https://i.ibb.co/NgH16DGM/abstract-textured-purple-backgound.jpg" alt="abstract-textured-purple-backgound" border="0">
+        <canvas id="signature-pad" class="signature-pad" width="400" height="200"></canvas>
+    </div>
+    
+    <div class="color-controls">
+        <span>Colors: </span>
+        <div class="color-btn active" data-color="#000000" style="background-color: #000000;"></div>
+        <div class="color-btn" data-color="#ff0000" style="background-color: #ff0000;"></div>
+        <div class="color-btn" data-color="#00ff00" style="background-color: #00ff00;"></div>
+        <div class="color-btn" data-color="#0000ff" style="background-color: #0000ff;"></div>
+        <div class="color-btn" data-color="#ffff00" style="background-color: #ffff00;"></div>
+        <div class="color-btn" data-color="#ff00ff" style="background-color: #ff00ff;"></div>
+        <div class="color-btn" data-color="#ffffff" style="background-color: #ffffff;"></div>
+    </div>
+    
+    <div class="brush-size">
+        <label for="brushSize">Brush Size: </label>
+        <input type="range" id="brushSize" min="1" max="20" value="3">
+        <span id="brushSizeValue">3</span>px
+    </div>
+    
+    <div class="controls">
+        <button id="save">Save Drawing</button>
+        <button id="clear">Clear</button>
+    </div>
 
 <script src="script.js"></script>
 </body>
